@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You are special!</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:Poppins,sans-serif;
+  /* background: radial-gradient(circle at bottom,#4b0018,#000 60%); */
+  background: black;
+  color:white;
+  overflow:hidden;
+}
+
+/* dotted bg */
+body:before{
+  content:"";
+  position:fixed; inset:0;
+  background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size:22px 22px;
+  opacity:.25;
+}
+
+/* screens */
+
+.screen{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transform:translateY(30px) scale(.96);
+  transition:.6s ease;
+  padding:20px;
+}
+
+.screen.active{
+  opacity:1;
+  transform:none;
+  z-index:2;
+}
+
+/* avatar */
+
+.avatarWrap{
+  width:130px;height:130px;
+  border-radius:50%;
+  background:#7a0a2a;
+  display:grid;place-items:center;
+  box-shadow:0 0 40px #ff2f6d66;
+  margin-bottom:20px;
+  position:relative;
+}
+
+.avatarWrap:after{
+  content:"";
+  position:absolute; inset:-10px;
+  border-radius:50%;
+  border:2px solid #ff2f6d55;
+  animation:pulse 2s infinite;
+}
+
+.avatar{font-size:48px}
+
+/* text */
+
+.script{
+  font-family:Pacifico;
+  font-size:38px;
+  color:#ff6fa3;
+  margin:10px 0;
+}
+
+.sub{
+  opacity:.85;
+  margin-bottom:25px;
+}
+
+/* buttons */
+
+.btn{
+  background:linear-gradient(90deg,#ff2f6d,#ff6fa3);
+  border:none;
+  padding:14px 26px;
+  border-radius:30px;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:0 8px 24px #ff2f6d55;
+}
+
+/* progress card */
+
+.card{
+  background:#2a0c18;
+  border-radius:18px;
+  padding:26px;
+  width:320px;
+  box-shadow:0 0 30px #ff2f6d33;
+  border:1px solid #ff2f6d33;
+}
+
+.bar{
+  height:14px;
+  background:#3a1a24;
+  border-radius:20px;
+  overflow:hidden;
+  margin:16px 0;
+}
+
+.fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#ff8ac2,#ff2f6d);
+  border-radius:20px;
+  transition:width .3s linear;
+}
+
+/* list hearts */
+
+.reveal{
+  width:320px;
+}
+
+.row{
+  background:#ffffff14;
+  border-radius:14px;
+  padding:14px;
+  text-align:center;
+  margin:10px 0;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.row:hover{background:#ffffff22}
+
+/* note card */
+
+.note{
+  width:320px;
+  border-radius:16px;
+  background:linear-gradient(#ffb3c7,#ffd5df);
+  color:#7a0a2a;
+  padding:30px;
+  text-align:center;
+  cursor:pointer;
+  transform:scale(.9);
+  transition:.4s;
+}
+
+.note.open{
+  transform:scale(1.05);
+  background:white;
+}
+
+/* anim */
+
+@keyframes pulse{
+  0%{transform:scale(.9);opacity:.7}
+  70%{transform:scale(1.15);opacity:0}
+  100%{opacity:0}
+}
+.teddy-wrap{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:30px;
+  text-align:center;
+}
+
+.teddy{
+  font-size:120px;
+  animation: teddyDance 1s infinite ease-in-out;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,.25));
+}
+
+@keyframes teddyDance{
+  0%   { transform: translateY(0) rotate(0deg) scale(1); }
+  25%  { transform: translateY(-20px) rotate(-8deg) scale(1.05); }
+  50%  { transform: translateY(0) rotate(8deg) scale(1); }
+  75%  { transform: translateY(-12px) rotate(-5deg) scale(1.04); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+.special-text{
+  font-size:28px;
+  font-weight:600;
+  background: linear-gradient(90deg,#ff4d6d,#ff9e00,#ffd60a);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation: glowText 2s infinite alternate;
+}
+
+@keyframes glowText{
+  from { letter-spacing:1px; transform:scale(1); }
+  to   { letter-spacing:3px; transform:scale(1.05); }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 1️⃣ FIRST WINDOW -->
+
+<section class="screen active" id="s1">
+  <div class="avatarWrap"><div class="avatar">🧸</div></div>
+  <div class="script">Hey Beautiful</div>
+  <div class="sub">Do you even know how cute you are?</div>
+  <button class="btn" onclick="go(2)">Open My Heart 🤍</button>
+</section>
+
+<!-- 2️⃣ MEASURE WINDOW -->
+
+<section class="screen" id="s2">
+  <div class="card">
+    <div>Measuring your cuteness...</div>
+    <h1 id="percent" style="color:#ff6fa3;margin-top:10px">0%</h1>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <div style="color:#ffb3c7">⚠ WARNING: TOO CUTE TO HANDLE</div>
+  </div>
+</section>
+
+<!-- 3️⃣ HEART LIST -->
+
+<section class="screen" id="s3">
+  <div class="avatarWrap" style="width:90px;height:90px">💗</div>
+  <div class="script" style="font-size:30px">Just for you</div>
+  <div class="sub">Tap each one to reveal</div>
+
+  <div class="reveal" id="list"></div>
+
+  <button class="btn" onclick="go(5)" style="margin-top:15px">See more →</button>
+</section>
+
+<!-- 4️⃣ REVEALED TEXT LIST -->
+
+<!-- <section class="screen" id="s4">
+  <div class="script" style="font-size:30px">Just for you</div>
+
+  <div class="reveal">
+    <div class="row">You look adorable</div>
+    <div class="row">You have the sweetest vibe</div>
+    <div class="row">You make things feel lighter</div>
+    <div class="row">You are naturally charming</div>
+    <div class="row">You make everything feel special</div>
+  </div>
+
+  <button class="btn" onclick="go(5)" style="margin-top:15px">See more →</button>
+</section> -->
+
+<!-- 5️⃣ NOTE CLOSED -->
+
+<section class="screen" id="s5">
+  <div class="script" style="font-size:28px">A little note for you</div>
+  <div class="note" onclick="go(6)">
+    <div style="font-size:xxx-large">💝</div>
+    <br>Tap to open
+  </div>
+</section>
+
+<!-- 6️⃣ NOTE OPEN -->
+
+<section class="screen" id="s6">
+  <div class="script" style="font-size:28px">A little note for you</div>
+
+  <div class="card" style="text-align:center">
+    <div style="font-size:xxx-large">💌</div>
+    <br><br>
+
+    <div id="typeMsg" style="line-height:1.6;font-size:18px"></div>
+
+    <button onclick="go(7)" id="doneBtn" class="btn" style="margin-top:20px;display:none">
+      One More thing ➡
+    </button>
+
+  </div>
+</section>
+
+<section class="screen" id="s7">
+  <div class="teddy-wrap">
+    <div class="teddy">🧸</div>
+
+    <div class="special-text">
+      You'll always be special to me
+    </div>
+  </div>
+</section>
+<script>
+function startTypeNote(){
+  const text = `You are more special than you know.
+Never forget how amazing you are.
+You bring light wherever you go.`;
+
+  const el = document.getElementById("typeMsg");
+  const btn = document.getElementById("doneBtn");
+
+  el.innerHTML = "";
+  btn.style.display = "none";
+
+  let i = 0;
+
+  const t = setInterval(() => {
+    if(text[i] === "\n"){
+      el.innerHTML += "<br>";
+    } else {
+      el.innerHTML += text[i];
+    }
+
+    i++;
+
+    if(i >= text.length){
+      clearInterval(t);
+      btn.style.display = "inline-block"; // show after complete
+    }
+
+  }, 40); // typing speed
+}
+
+/* screen nav */
+
+// function go(n){
+//   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"))
+//   document.getElementById("s"+n).classList.add("active")
+//   if(n===2) startMeasure()
+//   if(n===3) buildHidden()
+// }
+function go(n){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"))
+  document.getElementById("s"+n).classList.add("active")
+
+  if(n===2) startMeasure()
+  if(n===3) buildHidden()
+  if(n===6) startTypeNote()   // 👈 ADD THIS
+}
+
+/* progress */
+
+function startMeasure(){
+  let p=0
+  const fill=document.getElementById("fill")
+  const txt=document.getElementById("percent")
+
+  const t=setInterval(()=>{
+    p+=2
+    fill.style.width=p+"%"
+    txt.innerText=p+"%"
+    if(p>=120){
+      clearInterval(t)
+      setTimeout(()=>go(3),700)
+    }
+  },40)
+}
+
+function buildHidden(){
+  const list=document.getElementById("list")
+  list.innerHTML=""
+  for(let i=0;i<5;i++){
+    const d=document.createElement("div")
+    d.className="row"
+    d.innerHTML="💗"
+    d.onclick=()=>  d.innerHTML=i == 0 ? "You look adorable":i == 1 ? 'You have the sweetest': i == 2 ? 'You make things feel lighter':i == 3 ? 'You are naturally charming':'You make everything feel special'
+    list.appendChild(d)
+  }
+}
+
+/* note open */
+
+function openNote(el){
+  el.classList.add("open")
+  // setTimeout(()=>go(6),700)
+}
+
+</script>
+
+</body>
+</html>
